@@ -1,19 +1,26 @@
 ## makeCacheMatrix creates a special matrix object that can hold its inverse matrix
 
 makeCacheMatrix <- function(x = matrix()) {
-    iMatrix <- NULL
-    
-    set <- function(y) {
-    x <<- y
-    iMatrix <<- NULL
-    }
-    
-    get <- function() x
-    setInverseMatrix <- function(invertedMatrix) iMatrix <<- invertedMatrix
-    getInverseMatrix <- function() iMatrix
-    list(set = set, get = get,
-         setInverseMatrix = setInverseMatrix,
-       getInverseMatrix = getInverseMatrix)
+        ##iMatrix is short for inverse Of the matrix
+  
+        iMatrix <- NULL
+        
+        set <- function(y) {
+                x <<- y
+                iMatrix <<- NULL
+        }
+        
+        get <- function() x
+        
+        setInverseMatrix <- function(invertedMatrix){
+                iMatrix <<- invertedMatrix
+        }
+        
+        getInverseMatrix <- function(){
+                iMatrix
+        }
+        
+        list(set = set, get = get,setInverseMatrix = setInverseMatrix,getInverseMatrix = getInverseMatrix)
 }
 
 
@@ -22,13 +29,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-    iM <- x$getInverseMatrix()
-    if(!is.null(iM)) {
-      message("Getting cached inverse of the matrix")
-      return(iM)
-    }
-    data <- x$get()
-    iM <- solve(data)
-    x$setInverseMatrix(iM)
-    iM
+        ##iM stands for inverted Matrix in this function
+        iM <- x$getInverseMatrix()
+        if(!is.null(iM)) {
+                message("Getting cached inverse of the matrix")
+                return(iM)
+        }
+        data <- x$get()
+        iM <- solve(data)
+        x$setInverseMatrix(iM)
+        iM
 }
